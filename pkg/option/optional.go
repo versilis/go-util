@@ -1,4 +1,4 @@
-package optional
+package option
 
 type Optional[T any] interface {
 	Get() (T, bool)

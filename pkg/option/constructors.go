@@ -1,4 +1,4 @@
-package optional
+package option
 
 import "github.com/versilis/go-util/internal/typeutils"
 
