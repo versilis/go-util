@@ -19,6 +19,7 @@ func (o optionalImpl[T]) Maybe() (T, bool) {
 	return o.val, o.IsPresent()
 }
 
+// Get returns the underlying value or panics if it does not exist
 func (o optionalImpl[T]) Get() T {
 	if o.IsEmpty() {
 		panic("get called on empty optional")
