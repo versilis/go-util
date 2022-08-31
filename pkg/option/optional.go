@@ -14,8 +14,16 @@ type optionalImpl[T any] struct {
 	isEmpty bool
 }
 
-func (o optionalImpl[T]) Get() (T, bool) {
+func (o optionalImpl[T]) Maybe() (T, bool) {
 	return o.val, o.IsPresent()
+}
+
+func (o optionalImpl[T]) Get() T {
+	if o.IsEmpty() {
+		panic("get called on empty optional")
+	}
+
+	return o.val
 }
 
 func (o optionalImpl[T]) Else(other T) T {
