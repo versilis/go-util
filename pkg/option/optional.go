@@ -1,7 +1,8 @@
 package option
 
 type Optional[T any] interface {
-	Get() (T, bool)
+	Maybe() (T, bool)
+	Get() T
 	Else(other T) T
 	ElseGet(supplier func() T) T
 	ElseErr(err error) (T, error)
@@ -56,7 +57,7 @@ func (o optionalImpl[T]) IsPresent() bool {
 }
 
 func Map[A, B any](o Optional[A], transform func(A) B) Optional[B] {
-	if value, ok := o.Get(); ok {
+	if value, ok := o.Maybe(); ok {
 		return Just[B](transform(value))
 	} else {
 		return Empty[B]()
@@ -64,7 +65,7 @@ func Map[A, B any](o Optional[A], transform func(A) B) Optional[B] {
 }
 
 func FlatMap[A, B any](o Optional[A], transform func(A) Optional[B]) Optional[B] {
-	if value, ok := o.Get(); ok {
+	if value, ok := o.Maybe(); ok {
 		return transform(value)
 	} else {
 		return Empty[B]()
